@@ -124,10 +124,7 @@ class Bill_App:
         cbill_en = Entry(F1,bd = 8,relief = GROOVE,textvariable = self.c_bill_no)
         cbill_en.grid(row = 0,column = 5,ipadx = 30,ipady = 4,pady = 5)
         
-        #====================Bill Search Button===============#
-        #bill_btn = Button(F1,text = "Enter",bd = 7,relief = GROOVE,font = ("times new roman",12,"bold"),bg = bg_color,fg = fg_color)
-        #bill_btn.grid(row = 0,column = 6,ipady = 5,padx = 60,ipadx = 19,pady = 5)
-
+        
         #==================Appetizers Frame=====================#
         F2 = LabelFrame(self.root,text = 'Appetizers',bd = 10,relief = GROOVE,bg = bg_color,fg = "gold",font = ("times new roman",13,"bold"))
         F2.place(x = 5,y = 180,width = 325,height = 375)
@@ -247,28 +244,6 @@ class Bill_App:
         F4 = LabelFrame(self.root,text = 'Bill Menu',bd = 10,relief = GROOVE,bg = bg_color,fg = "gold",font = ("times new roman",13,"bold"))
         F4.place(x = 0,y = 560,width = 960,height = 145)
 
-        # #===================
-        # cosm_lbl = Label(F4,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "CGST")
-        # cosm_lbl.grid(row = 0,column = 0,padx = 10,pady = 0)
-        # cosm_en = Entry(F4,bd = 8,relief = GROOVE,textvariable = self.total_Appetizers)
-        # cosm_en.grid(row = 0,column = 1,ipady = 2,ipadx = 5)
-
-        # #===================
-        # gro_lbl = Label(F4,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "SGST")
-        # gro_lbl.grid(row = 1,column = 0,padx = 10,pady = 5)
-        # gro_en = Entry(F4,bd = 8,relief = GROOVE,textvariable = self.total_MainCourse)
-        # gro_en.grid(row = 1,column = 1,ipady = 2,ipadx = 5)
-
-        # #================
-        # oth_lbl = Label(F4,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "TOTAL")
-        # oth_lbl.grid(row = 2,column = 0,padx = 10,pady = 5)
-        # oth_en = Entry(F4,bd = 8,relief = GROOVE,textvariable = self.total_other)
-        # oth_en.grid(row = 2,column = 1,ipady = 2,ipadx = 5)
-
-        
-        # #====================
-        # total_btn = Button(F4,text = "Total",bg = bg_color,fg = fg_color,font=("lucida",12,"bold"),bd = 7,relief = GROOVE,command = self.total)
-        # total_btn.grid(row = 1,column = 4,ipadx = 20,padx = 30)
 
         #========================
         genbill_btn = Button(F4,text = "Generate Bill",bg = bg_color,fg = fg_color,font=("lucida",12,"bold"),bd = 7,relief = GROOVE,command = self.bill_area)
