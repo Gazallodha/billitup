@@ -1,0 +1,427 @@
+from tkinter import *
+import random
+import matplotlib.pyplot as plt
+import pickle
+from datetime import date
+import calendar
+
+def plotGraph(daySum):
+        x = []
+        x = list(daySum.keys())
+        y = []
+        y = list(daySum.values())
+
+        #plotting the points
+        plt.plot(x, y)
+
+        #naming the axis
+        plt.xlabel('Day')
+        plt.ylabel('Sales')
+        plt.title('Weekly earnings!')
+
+        #show the plot
+        plt.show()
+
+def storeDataToFile(vday, vamt):
+        db = {}
+        db['Mon'] = 10
+        db['Tue'] = 15
+        db['Wed'] = 25
+        db['Thu'] = 15
+        db['Fri'] = 40
+        db['Sat'] = 50
+        db['Sun'] = 55
+
+        db[vday] += vamt
+
+        dbfile = open('examplePickle.pkl', 'ab')
+
+        #storing
+        pickle.dump(db, dbfile)
+        dbfile.close()
+
+        #loading
+        dbfile = open('examplePickle.pkl', 'rb')
+        while True:
+            try:
+                db = pickle.load(dbfile)
+            except EOFError:
+                break
+
+        plotGraph(db)
+        dbfile.close()
+
+
+class Bill_App:
+            
+    def __init__(self,root):
+        self.root = root
+        self.root.geometry("1300x700+0+0")
+        self.root.maxsize(width = 1300,height = 700)
+        self.root.minsize(width = 1300,height = 700)
+        self.root.title("Bill It Up")
+        
+        #====================Variables========================#
+        self.cus_name = StringVar()
+        self.c_phone = StringVar()
+        #For Generating Random Bill Numbers
+        x = random.randint(1000,9999)
+        self.c_bill_no = StringVar()
+        #Seting Value to variable
+        self.c_bill_no.set(str(x))
+
+        self.Honey_chilly_Potato = IntVar()
+        self.paneer_chilly = IntVar()
+        self.Manchurian = IntVar()
+        self.Fried_rice = IntVar()
+        self.pizza = IntVar()
+        self.dal_tadka = IntVar()
+        self.dal_makhani = IntVar()
+        self.paneer_butter = IntVar()
+        self.mix_veg = IntVar()
+        self.roti = IntVar()
+        self.ice_cream = IntVar()
+        self.browine = IntVar()
+        self.kulfi = IntVar()
+        self.kheer = IntVar()
+        self.gewar = IntVar()
+        self.total_Appetizers = StringVar()
+        self.total_MainCourse = StringVar()
+        self.total_other = StringVar()
+        self.tax_cos = StringVar()
+        self.tax_groc = StringVar()
+        self.tax_other = StringVar()
+
+        self.total_MainCourse_prices = 0
+        self.total_Appetizers_prices = 0
+        self.total_other_prices = 0
+
+
+        #===================================
+        bg_color = "#800000"
+        fg_color = "white"
+        lbl_color = 'white'
+        #Title of App
+        title = Label(self.root,text = "Bill It Up",bd = 12,relief = GROOVE,fg = fg_color,bg = bg_color,font=("times new roman",30,"bold"),pady = 3).pack(fill = X)
+
+        #==========Customers Frame==========#
+        F1 = LabelFrame(text = "Customer Details",font = ("time new roman",12,"bold"),fg = "gold",bg = bg_color,relief = GROOVE,bd = 10)
+        F1.place(x = 0,y = 80,relwidth = 1)
+
+        #===============Customer Name===========#
+        cname_lbl = Label(F1,text="Customer Name",bg = bg_color,fg = fg_color,font=("times new roman",15,"bold")).grid(row = 0,column = 0,padx = 10,pady = 5)
+        cname_en = Entry(F1,bd = 8,relief = GROOVE,textvariable = self.cus_name)
+        cname_en.grid(row = 0,column = 1,ipady = 4,ipadx = 30,pady = 5)
+
+        #=================Customer Phone==============#
+        cphon_lbl = Label(F1,text = "Phone No",bg = bg_color,fg = fg_color,font = ("times new roman",15,"bold")).grid(row = 0,column = 2,padx = 20)
+        cphon_en = Entry(F1,bd = 8,relief = GROOVE,textvariable = self.c_phone)
+        cphon_en.grid(row = 0,column = 3,ipady = 4,ipadx = 30,pady = 5)
+
+        #====================Customer Bill No==================#
+        cbill_lbl = Label(F1,text = "Bill No.",bg = bg_color,fg = fg_color,font = ("times new roman",15,"bold"))
+        cbill_lbl.grid(row = 0,column = 4,padx = 20)
+        cbill_en = Entry(F1,bd = 8,relief = GROOVE,textvariable = self.c_bill_no)
+        cbill_en.grid(row = 0,column = 5,ipadx = 30,ipady = 4,pady = 5)
+        
+        #====================Bill Search Button===============#
+        #bill_btn = Button(F1,text = "Enter",bd = 7,relief = GROOVE,font = ("times new roman",12,"bold"),bg = bg_color,fg = fg_color)
+        #bill_btn.grid(row = 0,column = 6,ipady = 5,padx = 60,ipadx = 19,pady = 5)
+
+        #==================Appetizers Frame=====================#
+        F2 = LabelFrame(self.root,text = 'Appetizers',bd = 10,relief = GROOVE,bg = bg_color,fg = "gold",font = ("times new roman",13,"bold"))
+        F2.place(x = 5,y = 180,width = 325,height = 375)
+
+        #===========Frame Content
+        chow_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Chowmein")
+        chow_lbl.grid(row = 0,column = 0,padx = 10,pady = 20)
+        chow_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.Honey_chilly_Potato)
+        chow_en.grid(row = 0,column = 1,ipady = 5,ipadx = 5)
+
+        
+        #========Paneer Chilly
+        Paneer_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Paneer Chilly")
+        Paneer_lbl.grid(row = 2,column = 0,padx = 10,pady = 20)
+        Paneer_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.paneer_chilly)
+        Paneer_en.grid(row = 2,column = 1,ipady = 5,ipadx = 5)
+
+        #========Manchurian
+        manc_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Manchurian")
+        manc_lbl.grid(row = 3,column = 0,padx = 10,pady = 20)
+        manc_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.Manchurian)
+        manc_en.grid(row = 3,column = 1,ipady = 5,ipadx = 5)
+
+        #============Fried Rice
+        fri_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Fried Rice")
+        fri_lbl.grid(row = 4,column = 0,padx = 10,pady = 20)
+        fri_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.Fried_rice)
+        fri_en.grid(row = 4,column = 1,ipady = 5,ipadx = 5)
+
+        #============Pizza
+        piz_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Pizza")
+        piz_lbl.grid(row = 5,column = 0,padx = 10,pady = 20)
+        piz_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.pizza)
+        piz_en.grid(row = 5,column = 1,ipady = 5,ipadx = 5)
+
+        #==================MainCourse Frame=====================#
+        F2 = LabelFrame(self.root,text = 'MainCourse',bd = 10,relief = GROOVE,bg = bg_color,fg = "gold",font = ("times new roman",13,"bold"))
+        F2.place(x = 330,y = 180,width = 325,height = 375)
+
+        #===========Frame Content
+        dalt_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Dal Tadka")
+        dalt_lbl.grid(row = 0,column = 0,padx = 10,pady = 20)
+        dalt_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.dal_tadka)
+        dalt_en.grid(row = 0,column = 1,ipady = 5,ipadx = 5)
+
+        #=======
+        dalm_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Dal Makhani")
+        dalm_lbl.grid(row = 2,column = 0,padx = 10,pady = 20)
+        dalm_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.dal_makhani)
+        dalm_en.grid(row = 2,column = 1,ipady = 5,ipadx = 5)
+        #=======
+        kadai_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Kadai Paneer")
+        kadai_lbl.grid(row = 1,column = 0,padx = 10,pady = 20)
+        kadai_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.paneer_butter)
+        kadai_en.grid(row = 1,column = 1,ipady = 5,ipadx = 5)
+        #========
+        mix_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Mix Veg.")
+        mix_lbl.grid(row = 3,column = 0,padx = 10,pady = 20)
+        mix_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.mix_veg)
+        mix_en.grid(row = 3,column = 1,ipady = 5,ipadx = 5)
+
+        #========
+        roti_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Roti")
+        roti_lbl.grid(row = 4,column = 0,padx = 10,pady = 20)
+        roti_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.roti)
+        roti_en.grid(row = 4,column = 1,ipady = 5,ipadx = 5)
+        #==================Desserts=====================#
+
+        F2 = LabelFrame(self.root,text = 'Desserts',bd = 10,relief = GROOVE,bg = bg_color,fg = "gold",font = ("times new roman",13,"bold"))
+        F2.place(x = 655,y = 180,width = 325,height = 375)
+
+        #===========Frame Content
+        ice_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Ice Cream")
+        ice_lbl.grid(row = 0,column = 0,padx = 10,pady = 20)
+        ice_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.ice_cream)
+        ice_en.grid(row = 0,column = 1,ipady = 5,ipadx = 5)
+
+        #=======
+        brow_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Brownie")
+        brow_lbl.grid(row = 1,column = 0,padx = 10,pady = 20)
+        brow_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.browine)
+        brow_en.grid(row = 1,column = 1,ipady = 5,ipadx = 5)
+
+        #=======
+        kulfi_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Kulfi")
+        kulfi_lbl.grid(row = 2,column = 0,padx = 10,pady = 20)
+        kulfi_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.kulfi)
+        kulfi_en.grid(row = 2,column = 1,ipady = 5,ipadx = 5)
+
+        #========
+        kheer_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Kheer")
+        kheer_lbl.grid(row = 3,column = 0,padx = 10,pady = 20)
+        kheer_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.kheer)
+        kheer_en.grid(row = 3,column = 1,ipady = 5,ipadx = 5)
+
+        gewar_lbl = Label(F2,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "Gewar")
+        gewar_lbl.grid(row = 4,column = 0,padx = 10,pady = 20)
+        gewar_en = Entry(F2,bd = 8,relief = GROOVE,textvariable = self.gewar)
+        gewar_en.grid(row = 4,column = 1,ipady = 5,ipadx = 5)
+
+
+        #===================Bill Area================#
+        F3 = Label(self.root,bd = 10,relief = GROOVE)
+        F3.place(x = 960,y = 180,width = 325,height = 500)
+        #===========
+        bill_title = Label(F3,text = "Bill Area",font = ("Lucida",13,"bold"),bd= 7,relief = GROOVE)
+        bill_title.pack(fill = X)
+
+        #============
+        scroll_y = Scrollbar(F3,orient = VERTICAL)
+        self.txt = Text(F3,yscrollcommand = scroll_y.set)
+        scroll_y.pack(side = RIGHT,fill = Y)
+        scroll_y.config(command = self.txt.yview)
+        self.txt.pack(fill = BOTH,expand = 1)
+
+        #===========Buttons Frame=============#
+        F4 = LabelFrame(self.root,text = 'Bill Menu',bd = 10,relief = GROOVE,bg = bg_color,fg = "gold",font = ("times new roman",13,"bold"))
+        F4.place(x = 0,y = 560,width = 960,height = 145)
+
+        # #===================
+        # cosm_lbl = Label(F4,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "CGST")
+        # cosm_lbl.grid(row = 0,column = 0,padx = 10,pady = 0)
+        # cosm_en = Entry(F4,bd = 8,relief = GROOVE,textvariable = self.total_Appetizers)
+        # cosm_en.grid(row = 0,column = 1,ipady = 2,ipadx = 5)
+
+        # #===================
+        # gro_lbl = Label(F4,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "SGST")
+        # gro_lbl.grid(row = 1,column = 0,padx = 10,pady = 5)
+        # gro_en = Entry(F4,bd = 8,relief = GROOVE,textvariable = self.total_MainCourse)
+        # gro_en.grid(row = 1,column = 1,ipady = 2,ipadx = 5)
+
+        # #================
+        # oth_lbl = Label(F4,font = ("times new roman",15,"bold"),fg = lbl_color,bg = bg_color,text = "TOTAL")
+        # oth_lbl.grid(row = 2,column = 0,padx = 10,pady = 5)
+        # oth_en = Entry(F4,bd = 8,relief = GROOVE,textvariable = self.total_other)
+        # oth_en.grid(row = 2,column = 1,ipady = 2,ipadx = 5)
+
+        
+        # #====================
+        # total_btn = Button(F4,text = "Total",bg = bg_color,fg = fg_color,font=("lucida",12,"bold"),bd = 7,relief = GROOVE,command = self.total)
+        # total_btn.grid(row = 1,column = 4,ipadx = 20,padx = 30)
+
+        #========================
+        genbill_btn = Button(F4,text = "Generate Bill",bg = bg_color,fg = fg_color,font=("lucida",12,"bold"),bd = 7,relief = GROOVE,command = self.bill_area)
+        genbill_btn.grid(row =1,column = 5,ipadx = 20)
+
+         #====================
+        graph_btn = Button(F4,text = "Weekly Sales",bg = bg_color,fg = fg_color,font=("lucida",12,"bold"),bd = 7,relief = GROOVE,command = self.show_graph)
+        graph_btn.grid(row = 1,column = 6,ipadx = 20,padx = 30)
+
+        #====================
+        clear_btn = Button(F4,text = "Clear",bg = bg_color,fg = fg_color,font=("lucida",12,"bold"),bd = 7,relief = GROOVE,command = self.clear)
+        clear_btn.grid(row = 1,column = 7,ipadx = 20,padx = 30)       
+
+        #======================
+        exit_btn = Button(F4,text = "Exit",bg = bg_color,fg = fg_color,font=("lucida",12,"bold"),bd = 7,relief = GROOVE,command = self.exit)
+        exit_btn.grid(row = 1,column = 8,ipadx = 20)
+
+#Function to get total prices
+    def total(self):
+        #=================Total Appetizers Prices
+        self.total_Appetizers_prices = (
+            (self.Honey_chilly_Potato.get() * 140)+
+            (self.Manchurian.get() * 240)+
+            (self.paneer_chilly.get() * 140)+
+            (self.Fried_rice.get() * 340)+
+            (self.pizza.get()*300)
+        )
+       # self.total_Appetizers.set("Rs. "+str(self.total_Appetizers_prices))
+        self.tax_cos.set("Rs. "+str(round(self.total_Appetizers_prices+self.total_MainCourse_prices+self.total_other_prices)*0.025))
+        #====================Total MainCourse Prices
+        self.total_MainCourse_prices = (
+            (self.mix_veg.get()*200)+
+            (self.paneer_butter.get() * 280)+
+            (self.dal_makhani.get() * 250)+
+            (self.dal_tadka.get() *200)+
+            (self.roti.get()*20)
+
+        )
+      #  self.total_MainCourse.set("Rs. "+str(self.total_MainCourse_prices))
+        self.tax_groc.set("Rs. "+str(round(self.total_Appetizers_prices+self.total_MainCourse_prices+self.total_other_prices)*0.025))
+        #======================Total Other Prices
+        self.total_other_prices = (
+            (self.ice_cream.get() * 70)+
+            (self.kulfi.get() * 50)+
+            (self.browine.get() * 60)+
+            (self.kheer.get() * 80)+
+            (self.gewar.get()* 60)
+        )
+        self.tax_other.set("Rs. "+str(round(self.total_Appetizers_prices+self.total_MainCourse_prices+self.total_other_prices)*1.05))
+        #self.tax_other.set("Rs. "+str(round(self.total_other_prices*0.05)))
+
+
+#Function For Text Area
+    def welcome_soft(self):
+        self.txt.delete('1.0',END)
+        self.txt.insert(END,"  Welcome To LakeView Restaurant\n")
+        self.txt.insert(END,f"\nBill No. : {str(self.c_bill_no.get())}")
+        self.txt.insert(END,f"\nCustomer Name : {str(self.cus_name.get())}")
+        self.txt.insert(END,f"\nPhone No. : {str(self.c_phone.get())}")
+        self.txt.insert(END,"\n===================================")
+        self.txt.insert(END,"\nProduct          Qty         Price")
+        self.txt.insert(END,"\n===================================")
+
+#Function to clear the bill area
+    def clear(self):
+        self.txt.delete('1.0',END)
+        #====================Variables========================#
+        self.cus_name.set('')
+        self.c_phone.set('')
+        #For Generating Random Bill Numbers
+        x = random.randint(1000,9999)
+        self.c_bill_no.set(str(x))
+
+        self.Honey_chilly_Potato.set(0)
+        self.paneer_chilly.set(0)
+        self.Manchurian.set(0)
+        self.Fried_rice.set(0)
+        self.pizza.set(0)
+        self.dal_tadka.set(0)
+        self.dal_makhani.set(0)
+        self.paneer_butter.set(0)
+        self.mix_veg.set(0)
+        self.roti.set(0)
+        self.ice_cream.set(0)
+        self.browine.set(0)
+        self.kulfi.set(0)
+        self.kheer.set(0)
+        self.gewar.set(0)
+        self.total_Appetizers.set(0)
+        self.total_MainCourse.set(0)
+        self.total_other.set(0)
+        self.tax_cos.set(0)
+        self.tax_groc.set(0)
+        self.tax_other.set(0)
+        self.total_MainCourse_prices = 0
+        self.total_Appetizers_prices = 0
+        self.total_other_prices = 0
+
+
+
+#Function to generate graph
+    def show_graph(self):
+        tday = calendar.day_name[date.today().weekday()][0:3]
+        # print(tday)
+        storeDataToFile(tday,(self.total_Appetizers_prices+self.total_MainCourse_prices+self.total_other_prices))
+        # self.txt.delete('1.0',END)
+
+#Add Product name , qty and price to bill area
+    def bill_area(self):
+        self.welcome_soft()
+        if self.Honey_chilly_Potato.get() != 0:
+            self.txt.insert(END,f"\nChowmein          {self.Honey_chilly_Potato.get()}          {self.Honey_chilly_Potato.get() * 140}")
+        if self.paneer_chilly.get() != 0:
+            self.txt.insert(END,f"\nPaneer Chilly     {self.paneer_chilly.get()}          {self.paneer_chilly.get() * 240}")
+        if self.Manchurian.get() != 0:
+            self.txt.insert(END,f"\nManchurian        {self.Manchurian.get()}          {self.Manchurian.get() * 240}")
+        if self.Fried_rice.get() != 0:
+            self.txt.insert(END,f"\nFried Rice        {self.Fried_rice.get()}          {self.Fried_rice.get() * 340}")
+        if self.pizza.get() != 0:
+            self.txt.insert(END,f"\nPizza             {self.pizza.get()}          {self.pizza.get() * 300}")
+        if self.mix_veg.get() != 0:
+            self.txt.insert(END,f"\nMix Veg           {self.mix_veg.get()}          {self.mix_veg.get() * 200}")
+        if self.paneer_butter.get() != 0:
+            self.txt.insert(END,f"\nKadai Paneer      {self.paneer_butter.get()}          {self.paneer_butter.get() * 280}")
+        if self.dal_makhani.get() != 0:
+            self.txt.insert(END,f"\nDal Makhani       {self.dal_makhani.get()}          {self.dal_makhani.get() * 250}")
+        if self.dal_tadka.get() != 0:
+            self.txt.insert(END,f"\nDal Tadka         {self.dal_tadka.get()}          {self.dal_tadka.get() * 200}")
+        if self.roti.get() != 0:
+            self.txt.insert(END,f"\nRoti              {self.roti.get()}          {self.roti.get() * 20}")
+        if self.ice_cream.get() != 0:
+            self.txt.insert(END,f"\nIce Cream         {self.ice_cream.get()}          {self.ice_cream.get() * 70}")
+        if self.kulfi.get() != 0:
+            self.txt.insert(END,f"\nKulfi             {self.kulfi.get()}          {self.kulfi.get() * 50}")
+        if self.browine.get() != 0:
+            self.txt.insert(END,f"\nBrownie           {self.browine.get()}          {self.browine.get() * 60}")
+        if self.kheer.get() != 0:
+            self.txt.insert(END,f"\nKheer             {self.kheer.get()}          {self.kheer.get() * 80}") 
+        if self.gewar.get() != 0:
+            self.txt.insert(END,f"\nGewar             {self.gewar.get()}          {self.gewar.get() * 60}")
+        self.txt.insert(END,"\n===================================") 
+        self.total()
+        self.txt.insert(END,f"\n                  CGST  :     {(self.total_Appetizers_prices+self.total_MainCourse_prices+self.total_other_prices) * 0.025}")
+        self.txt.insert(END,f"\n                  SGST  :     {(self.total_Appetizers_prices+self.total_MainCourse_prices+self.total_other_prices) * 0.025}")
+        self.txt.insert(END,"\n===================================") 
+        self.txt.insert(END,f"\n                  Total  :  {self.total_Appetizers_prices+self.total_MainCourse_prices+self.total_other_prices+(self.total_Appetizers_prices+self.total_MainCourse_prices+self.total_other_prices) * 0.05}")
+
+
+    #Function to exit
+    def exit(self):
+        self.root.destroy()
+
+    #Function To Clear All Fields
+root = Tk()
+object = Bill_App(root)
+root.mainloop()
